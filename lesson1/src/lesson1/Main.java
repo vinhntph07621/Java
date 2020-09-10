@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
 
-    static class User implements Comparable<User>{
+    static class User implements Comparable<User> {
         private Integer id;
         private String name;
         private Integer age;
@@ -61,14 +61,12 @@ public class Main {
                     ", gender='" + gender + '\'' +
                     '}';
         }
+
         @Override
         public int compareTo(User user) {
-            // sort student's name by ASC
             return this.getName().compareTo(user.getName());
         }
     }
-
-
 
     private static String generateName(String[] nameArr) {
         StringBuilder builder = new StringBuilder();
@@ -87,7 +85,8 @@ public class Main {
         int low = 20;
         int high = 23;
         System.out.println("LIST USER");
-        for (int i = 1; i <= 300; i++) {
+        ArrayList<User> users = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
             User user = new User();
             int res = r.nextInt(gender.length);
             int age = r.nextInt(high - low) + low;
@@ -95,13 +94,57 @@ public class Main {
             user.setName(generateName(name));
             user.setGender(gender[res]);
             user.setAge(age);
-            System.out.println(user.toString());
+            //System.out.println(user.toString());
             // hien thi name trong user
-            ArrayList<String> arrListName = new ArrayList<>();
-            arrListName.add(user.name);
 //            System.out.println("Name: " + arrListName);
+            users.add(user);
+        }
+        printUsers(users);
+
+        Collections.sort(users);
+
+        System.out.println("---------------------------------------------------");
+        System.out.println("Sort user by name");
+        printUsers(users);
+
+        System.out.println("---------------------------------------------------");
+        System.out.println("Count Male and Female");
+        countGenders(users);
+
+        System.out.println("---------------------------------------------------");
+        System.out.println("Collect users has same name in a list");
+        collectionSameName(users);
+    }
+
+    private static void printUsers(List<User> users) {
+        for (int i = 0; i < users.size(); i++) {
+            System.out.println(users.get(i));
         }
     }
+
+    private static void countGenders(List<User> users) {
+        ArrayList<String> items = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            items.add(users.get(i).gender);
+        }
+//        System.out.println(items);
+        Set<String> st = new HashSet<String>(items);
+        for (String s : st) {
+            System.out.println(s + ": " + Collections.frequency(items, s));
+        }
+    }
+
+    private static void collectionSameName(List<User> users) {
+        Map<String, List<User>> clname = new HashMap<>();
+        for (int i = 0; i < users.size(); i++) {
+
+        }
+        System.out.println(clname);
+
+    }
 }
+
+
+
 
 
