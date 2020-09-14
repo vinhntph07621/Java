@@ -86,7 +86,7 @@ public class Main {
         int high = 23;
         System.out.println("LIST USER");
         ArrayList<User> users = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 50; i++) {
             User user = new User();
             int res = r.nextInt(gender.length);
             int age = r.nextInt(high - low) + low;
@@ -124,23 +124,33 @@ public class Main {
 
     private static void countGenders(List<User> users) {
         ArrayList<String> items = new ArrayList<>();
+        int total = 0;
         for (int i = 0; i < users.size(); i++) {
-            items.add(users.get(i).gender);
+            if (users.get(i).gender == "Male")
+                total += 1;
         }
-//        System.out.println(items);
-        Set<String> st = new HashSet<String>(items);
-        for (String s : st) {
-            System.out.println(s + ": " + Collections.frequency(items, s));
-        }
+        System.out.println("Male: " + (total) + "\nFemale: " + (users.size() - total));
+
     }
 
-    private static void collectionSameName(List<User> users) {
+    private static Map<String, List<User>> collectionSameName(List<User> users) {
         Map<String, List<User>> clname = new HashMap<>();
+        List<String> hasName = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
+            for (int j = 0; i < users.size(); i++){
+                if (users.get(i).getName().equals(users.get(i).getName())){
+                    hasName.add(users.get(i).getName());
+                    System.out.println("Name: " + hasName.get(i) + " - " + users.get(i));
+                }else{
+
+                }
+            }
 
         }
-        System.out.println(clname);
 
+
+//        System.out.println(clname);
+        return clname;
     }
 }
 
