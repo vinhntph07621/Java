@@ -115,6 +115,9 @@ public class Main {
         System.out.println("---------------------------------------------------");
         System.out.println("Collect users has same name in a list");
         collectionSameName(users);
+
+        System.out.println("---------------------------------------------------");
+        System.out.println("Collect users has same name and age in a list");
     }
 
     private static void printUsers(List<User> users) {
@@ -131,24 +134,32 @@ public class Main {
                 total += 1;
         }
         System.out.println("Male: " + (total) + "\nFemale: " + (users.size() - total));
-
     }
 
     private static Map<String, List<User>> collectionSameName(List<User> users) {
-        Map<String, List<User>> clname = new HashMap<>();
-        List<User> hasName = new ArrayList<>();
-//        Map<String, List<User>> map = users.stream()
-//                .collect(Collectors.groupingBy(User::getName, Collectors.toList()));
-        for (int i = 0; i < users.size(); i++) {
-                hasName.add(users.get(i));
-                clname.put(hasName.get(i).getName(), users);
-        }
-        System.out.println(clname);
-//        System.out.println(map);
+        Map<String, List<User>> clName = new HashMap<>();
 
-        return clname;
+        Map<String, Map<Integer, List<User>>> map = users.stream()
+                .collect(Collectors.groupingBy(User::getName, Collectors.groupingBy(User::getAge, Collectors.toList())));
+
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            List<User> nameUsers = clName.get(user.getName());
+            if (nameUsers == null) {
+                nameUsers = new ArrayList<>();
+                clName.put(user.getName(), nameUsers);
+            }
+            nameUsers.add(user);
+        }
+//        System.out.println(map);
+        System.out.println(clName);
+        return clName;
     }
+
+
 }
+
+
 
 
 
