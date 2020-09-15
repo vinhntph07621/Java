@@ -1,6 +1,7 @@
 package lesson1;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -135,21 +136,16 @@ public class Main {
 
     private static Map<String, List<User>> collectionSameName(List<User> users) {
         Map<String, List<User>> clname = new HashMap<>();
-        List<String> hasName = new ArrayList<>();
+        List<User> hasName = new ArrayList<>();
+//        Map<String, List<User>> map = users.stream()
+//                .collect(Collectors.groupingBy(User::getName, Collectors.toList()));
         for (int i = 0; i < users.size(); i++) {
-            for (int j = 0; i < users.size(); i++){
-                if (users.get(i).getName().equals(users.get(i).getName())){
-                    hasName.add(users.get(i).getName());
-                    System.out.println("Name: " + hasName.get(i) + " - " + users.get(i));
-                }else{
-
-                }
-            }
-
+                hasName.add(users.get(i));
+                clname.put(hasName.get(i).getName(), users);
         }
+        System.out.println(clname);
+//        System.out.println(map);
 
-
-//        System.out.println(clname);
         return clname;
     }
 }
