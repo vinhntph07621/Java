@@ -1,7 +1,6 @@
 package lesson1;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -106,18 +105,19 @@ public class Main {
 
         System.out.println("---------------------------------------------------");
         System.out.println("Sort user by name");
-        printUsers(users);
+//        printUsers(users);
 
         System.out.println("---------------------------------------------------");
         System.out.println("Count Male and Female");
-        countGenders(users);
+//        countGenders(users);
 
         System.out.println("---------------------------------------------------");
         System.out.println("Collect users has same name in a list");
-        collectionSameName(users);
+//        collectionSameName(users);
 
         System.out.println("---------------------------------------------------");
         System.out.println("Collect users has same name and age in a list");
+        collectUserHasSameNameAndAge(users);
     }
 
     private static void printUsers(List<User> users) {
@@ -139,8 +139,8 @@ public class Main {
     private static Map<String, List<User>> collectionSameName(List<User> users) {
         Map<String, List<User>> clName = new HashMap<>();
 
-        Map<String, Map<Integer, List<User>>> map = users.stream()
-                .collect(Collectors.groupingBy(User::getName, Collectors.groupingBy(User::getAge, Collectors.toList())));
+//        Map<String, Map<Integer, List<User>>> map = users.stream()
+//                .collect(Collectors.groupingBy(User::getName, Collectors.toList())));
 
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
@@ -156,6 +156,27 @@ public class Main {
         return clName;
     }
 
+    private static Map<String, Map<Integer, List<User>>> collectUserHasSameNameAndAge(List<User> users) {
+        Map<String, Map<Integer, List<User>>> map = new HashMap<>();
+
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            Map<Integer, List<User>> nameUsers = map.get(user.getName());
+            if (nameUsers == null) {
+                nameUsers = new HashMap<>();
+                map.put(user.getName(), nameUsers);
+            }
+
+            List<User> ages = nameUsers.get(user.getAge());
+            if (CollectionUtils.isEmpty(ages)) {
+                ages = new ArrayList<>();
+                nameUsers.put(user.getAge(), ages);
+            }
+            ages.add(user);
+        }
+        System.out.println(map);
+        return map;
+    }
 
 }
 
