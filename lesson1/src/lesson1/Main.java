@@ -86,14 +86,14 @@ public class Main {
         int high = 23;
         System.out.println("LIST USER");
         ArrayList<User> users = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 30; i++) {
             User user = new User();
             int res = r.nextInt(gender.length);
             int age = r.nextInt(high - low) + low;
-            user.setId(1);
-            user.setName("Vinh");
-            user.setGender("Female");
-            user.setAge(20);
+            user.setId(i);
+            user.setName(generateName(name));
+            user.setGender(gender[res]);
+            user.setAge(age);
             //System.out.println(user.toString());
             // hien thi name trong user
 //            System.out.println("Name: " + arrListName);
@@ -181,17 +181,19 @@ public class Main {
 
     private static Map<UserKey, List<User>> collectUserHasSameNameAndAge(List<User> users) {
         Map<UserKey, List<User>> map = new HashMap<>();
+        UserKey userKeys = new UserKey();
         for (int i = 0; i < users.size(); i++) {
-            UserKey userKeys = new UserKey();
             User user = users.get(i);
-            List<User> nameAgeUsers = map.get(userKeys);
             userKeys.setClName(users.get(i).getName());
             userKeys.setClAge(users.get(i).getAge());
-            if (user.equals(userKeys)) {
+            List<User> nameAgeUsers = map.get(userKeys);
+            if (nameAgeUsers == null){
                 nameAgeUsers = new ArrayList<>();
                 map.put(userKeys, nameAgeUsers);
             }
+
             nameAgeUsers.add(user);
+
         }
         System.out.println(map);
         return map;
