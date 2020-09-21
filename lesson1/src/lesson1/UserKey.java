@@ -1,5 +1,7 @@
 package lesson1;
 
+import java.util.Objects;
+
 public class UserKey {
     String clName;
     Integer clAge;
@@ -36,5 +38,18 @@ public class UserKey {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserKey userKey = (UserKey) o;
+        return Objects.equals(clName, userKey.clName) &&
+                Objects.equals(clAge, userKey.clAge);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clName, clAge);
+    }
 }
 
