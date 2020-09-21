@@ -86,14 +86,14 @@ public class Main {
         int high = 23;
         System.out.println("LIST USER");
         ArrayList<User> users = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 1; i <= 3; i++) {
             User user = new User();
             int res = r.nextInt(gender.length);
             int age = r.nextInt(high - low) + low;
-            user.setId(i);
-            user.setName(generateName(name));
-            user.setGender(gender[res]);
-            user.setAge(age);
+            user.setId(1);
+            user.setName("Vinh");
+            user.setGender("Female");
+            user.setAge(20);
             //System.out.println(user.toString());
             // hien thi name trong user
 //            System.out.println("Name: " + arrListName);
@@ -130,7 +130,7 @@ public class Main {
         ArrayList<String> items = new ArrayList<>();
         int total = 0;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).gender == "Male")
+            if (users.get(i).getGender() == "Male")
                 total += 1;
         }
         System.out.println("Male: " + (total) + "\nFemale: " + (users.size() - total));
@@ -156,28 +156,46 @@ public class Main {
         return clName;
     }
 
-    private static Map<String, Map<Integer, List<User>>> collectUserHasSameNameAndAge(List<User> users) {
-        Map<String, Map<Integer, List<User>>> map = new HashMap<>();
+//    private static Map<String, Map<Integer, List<User>>> collectUserHasSameNameAndAge(List<User> users) {
+//        Map<String, Map<Integer, List<User>>> map = new HashMap<>();
+//
+//        for (int i = 0; i < users.size(); i++) {
+//            User user = users.get(i);
+//            Map<Integer, List<User>> nameUsers = map.get(user.getName());
+//            if (nameUsers == null) {
+//                nameUsers = new HashMap<>();
+//                map.put(user.getName(), nameUsers);
+//            }
+//
+//            List<User> ages = nameUsers.get(user.getAge());
+//            if (CollectionUtils.isEmpty(ages)) {
+//                ages = new ArrayList<>();
+//                nameUsers.put(user.getAge(), ages);
+//            }
+//            ages.add(user);
+//        }
+//        System.out.println(map);
+//
+//        return map;
+//    }
 
+    private static Map<UserKey, List<User>> collectUserHasSameNameAndAge(List<User> users) {
+        Map<UserKey, List<User>> map = new HashMap<>();
         for (int i = 0; i < users.size(); i++) {
+            UserKey userKeys = new UserKey();
             User user = users.get(i);
-            Map<Integer, List<User>> nameUsers = map.get(user.getName());
-            if (nameUsers == null) {
-                nameUsers = new HashMap<>();
-                map.put(user.getName(), nameUsers);
+            List<User> nameAgeUsers = map.get(userKeys);
+            userKeys.setClName(users.get(i).getName());
+            userKeys.setClAge(users.get(i).getAge());
+            if (user.equals(userKeys)) {
+                nameAgeUsers = new ArrayList<>();
+                map.put(userKeys, nameAgeUsers);
             }
-
-            List<User> ages = nameUsers.get(user.getAge());
-            if (CollectionUtils.isEmpty(ages)) {
-                ages = new ArrayList<>();
-                nameUsers.put(user.getAge(), ages);
-            }
-            ages.add(user);
+            nameAgeUsers.add(user);
         }
         System.out.println(map);
         return map;
     }
-
 }
 
 
