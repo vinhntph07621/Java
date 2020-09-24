@@ -86,23 +86,19 @@ public class Main {
         int high = 23;
         System.out.println("LIST USER");
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User(1, "vinh", 22, "male"));
-        users.add(new User(2, "vinh", 22, "female"));
-        users.add(new User(3, "nam", 23, "male"));
-        users.add(new User(4, "nam", 23, "female"));
-//        for (int i = 1; i <= 5; i++) {
-//            User user = new User();
-//            int res = r.nextInt(gender.length);
-//            int age = r.nextInt(high - low) + low;
-//            user.setId(i);
-//            user.setName(generateName(name));
-//            user.setGender(gender[res]);
-//            user.setAge(age);
-//            //System.out.println(user.toString());
-//            // hien thi name trong user
-////            System.out.println("Name: " + arrListName);
-//            users.add(user);
-//        }
+        for (int i = 1; i <= 20; i++) {
+            User user = new User();
+            int res = r.nextInt(gender.length);
+            int age = r.nextInt(high - low) + low;
+            user.setId(i);
+            user.setName(generateName(name));
+            user.setGender(gender[res]);
+            user.setAge(age);
+            //System.out.println(user.toString());
+            // hien thi name trong user
+//            System.out.println("Name: " + arrListName);
+            users.add(user);
+        }
         printUsers(users);
 
         Collections.sort(users);
@@ -185,14 +181,14 @@ public class Main {
 
     private static Map<UserKey, List<User>> collectUserHasSameNameAndAge(List<User> users) {
         Map<UserKey, List<User>> map = new HashMap<>();
-        UserKey userKeys = new UserKey();
         for (int i = 0; i < users.size(); i++) {
+            UserKey userKeys = new UserKey();
             User user = users.get(i);
             userKeys.setClName(users.get(i).getName());
             userKeys.setClAge(users.get(i).getAge());
             List<User> nameAgeUsers = map.get(userKeys);
 
-            if (CollectionUtils.isEmpty(nameAgeUsers)){
+            if (CollectionUtils.isEmpty(nameAgeUsers)) {
                 nameAgeUsers = new ArrayList<>();
                 nameAgeUsers.add(user);
                 map.put(userKeys, nameAgeUsers);
